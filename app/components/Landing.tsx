@@ -38,8 +38,10 @@ export function Landing() {
           <a href="#" className="font-[Inter] text-[14px] font-medium text-[#5A6378] no-underline">Cómo funciona</a>
           <a href="#" className="font-[Inter] text-[14px] font-medium text-[#5A6378] no-underline">Ranking</a>
           <a href="#" className="font-[Inter] text-[14px] font-medium text-[#5A6378] no-underline">Premios</a>
-          <a href="#" className="font-[Inter] text-[14px] font-semibold text-[#121827] no-underline">Entrar</a>
-          <Link href="/register" className="px-[18px] py-[10px] bg-[#FA551E] text-white font-[Inter] font-semibold text-[14px] rounded-[4px] no-underline">
+          <Link href="/login" className="font-[Inter] text-[14px] font-semibold text-[#121827] no-underline hover:text-[#FA551E] transition-colors">
+            Entrar
+          </Link>
+          <Link href="/register" className="px-[18px] py-[10px] bg-[#FA551E] text-white font-[Inter] font-semibold text-[14px] rounded-[4px] no-underline hover:bg-[#E2440F] transition-colors duration-[140ms]">
             Crear cuenta
           </Link>
         </div>
@@ -281,9 +283,9 @@ export function Landing() {
             <Link href="/register" className="inline-flex items-center gap-[8px] px-[24px] py-[14px] bg-[#121827] text-[#F7F5F2] font-[Inter] font-semibold text-[15px] rounded-[4px] no-underline hover:bg-[#0A0F1A] transition-colors duration-[140ms]">
               Crear cuenta <ArrowRight size={17} />
             </Link>
-            <button className="inline-flex items-center gap-[8px] px-[24px] py-[14px] bg-transparent text-white font-[Inter] font-semibold text-[15px] border border-[rgba(255,255,255,0.30)] rounded-[4px] hover:bg-[rgba(255,255,255,0.05)] transition-colors duration-[140ms]">
+            <Link href="/login" className="inline-flex items-center gap-[8px] px-[24px] py-[14px] bg-transparent text-white font-[Inter] font-semibold text-[15px] border border-[rgba(255,255,255,0.30)] rounded-[4px] hover:bg-[rgba(255,255,255,0.05)] transition-colors duration-[140ms] no-underline">
               Entrar
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -296,10 +298,15 @@ export function Landing() {
             <span className="font-[Inter] text-[13px] text-[#5A6378]">Peña la Desilusión · una quiniela entre amigos</span>
           </div>
           <div className="flex gap-[24px]">
-            {['Cómo funciona', 'Ranking', 'Reglas', 'Entrar'].map((l) => (
-              <a key={l} href="#" className="font-[Inter] text-[13px] text-[#5A6378] no-underline">
-                {l}
-              </a>
+            {[
+              { label: 'Cómo funciona', href: '#' },
+              { label: 'Ranking', href: '#' },
+              { label: 'Reglas', href: '#' },
+              { label: 'Entrar', href: '/login' },
+            ].map((link) => (
+              <Link key={link.label} href={link.href} className="font-[Inter] text-[13px] text-[#5A6378] no-underline hover:text-[#FA551E] transition-colors">
+                {link.label}
+              </Link>
             ))}
           </div>
         </div>
