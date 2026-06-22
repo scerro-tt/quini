@@ -18,8 +18,8 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "lucide-react": "^0.394.0",
-    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.408.0",
+    "framer-motion": "^11.3.0",
     "zod": "^3.22.4",
     "tailwindcss": "^4"
   },
