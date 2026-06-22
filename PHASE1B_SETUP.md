@@ -39,21 +39,36 @@ Go to **Supabase Console** → **Storage** → **Create a new bucket**:
 
 ### 3. Configure Storage RLS Policies
 
-In Supabase SQL Editor, run:
+**EASIER: Use Supabase Console UI** (recommended):
+
+1. Go to **Supabase Console** → **Storage** → **boletos** bucket → **Policies**
+2. Click **New Policy** → **For authenticated users only**
+3. Add these policies via the UI:
+
+| Name | Type | Allowed |
+|------|------|---------|
+| Users can upload | INSERT | ✅ |
+| Users can read | SELECT | ✅ |
+| Users can delete own | DELETE | ✅ |
+
+The UI will generate the SQL for you.
+
+---
+
+**ALTERNATIVE: Run this SQL in SQL Editor:**
 
 ```sql
--- Enable RLS on storage.objects
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can upload boletos" ON storage.objects;
+DROP POLICY IF EXISTS "Users can read all boletos" ON storage.objects;
+DROP POLICY IF EXISTS "Users can delete their own boletos" ON storage.objects;
 
--- Policy: Users can upload to their own folder
+-- Policy: Users can upload to boletos bucket
 CREATE POLICY "Users can upload boletos"
   ON storage.objects
   FOR INSERT
   TO authenticated
-  WITH CHECK (
-    bucket_id = 'boletos'
-    AND (storage.foldername(name))[1] = auth.uid()::text
-  );
+  WITH CHECK (bucket_id = 'boletos');
 
 -- Policy: Users can read all boletos (transparency)
 CREATE POLICY "Users can read all boletos"
@@ -67,10 +82,7 @@ CREATE POLICY "Users can delete their own boletos"
   ON storage.objects
   FOR DELETE
   TO authenticated
-  USING (
-    bucket_id = 'boletos'
-    AND (storage.foldername(name))[1] = auth.uid()::text
-  );
+  USING (bucket_id = 'boletos' AND owner = auth.uid());
 ```
 
 ### 4. Get Anthropic API Key
