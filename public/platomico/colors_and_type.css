@@ -1,0 +1,326 @@
+/* =========================================================================
+   Platomico Design System — Foundations
+   Colors, Typography, Spacing, Radii, Shadows
+   ========================================================================= */
+
+/* ----- Fonts ------------------------------------------------------------- */
+@font-face {
+  font-family: "Manrope";
+  src: url("./fonts/Manrope-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("./fonts/Manrope-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("./fonts/Manrope-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("./fonts/Manrope-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("./fonts/Manrope-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------------------------------------------------------------------
+     COLOR — Brand core
+     The palette is disciplined: two anchors (Marine, Opal), one primary
+     (Blueprint), plus four accents used sparingly. Max 3 colors per piece.
+     --------------------------------------------------------------------- */
+
+  /* Brand */
+  --blueprint: #464CDD;   /* Primary action / link / focus */
+  --marine:    #121827;   /* Ink / foreground on light */
+  --opal:      #F7F5F2;   /* Canvas / light surface */
+
+  /* Accents — sparingly */
+  --heat:      #FA551E;   /* Alerts, critical state, warm highlight */
+  --aura:      #C8AFF0;   /* Soft spotlight, decorative tint */
+  --ray:       #FAD24B;   /* Attention, pending state */
+  --skyline:   #B4C8E1;   /* Cool secondary, info surfaces */
+
+  /* Tints / shades built from the anchors — use for hover, press, borders */
+  --blueprint-700: #2E34B8; /* press */
+  --blueprint-600: #3A40CD; /* hover */
+  --blueprint-100: #E3E4FB; /* subtle tint */
+  --blueprint-050: #F0F1FE; /* background tint */
+
+  --marine-900: #0A0F1A;    /* pure ink */
+  --marine-700: #2A3244;    /* body strong */
+  --marine-500: #5A6378;    /* body */
+  --marine-400: #7B8296;    /* muted */
+  --marine-300: #A8AEBD;    /* placeholder */
+  --marine-200: #D6D9E0;    /* border */
+  --marine-100: #E8EAEF;    /* hairline */
+  --marine-050: #F1F2F5;    /* subtle fill */
+
+  --opal-600: #E9E5DE;     /* divider on opal */
+  --opal-400: #F0ECE5;     /* subtle */
+
+  /* ---------------------------------------------------------------------
+     COLOR — Semantic (light theme, default)
+     --------------------------------------------------------------------- */
+  --bg:            var(--opal);
+  --bg-raised:     #FFFFFF;
+  --bg-sunken:     var(--opal-400);
+  --bg-inverse:    var(--marine);
+
+  --fg:            var(--marine);     /* primary text */
+  --fg-strong:     var(--marine-900);
+  --fg-muted:      var(--marine-500); /* secondary text */
+  --fg-subtle:     var(--marine-400); /* meta / captions */
+  --fg-placeholder: var(--marine-300);
+  --fg-on-brand:   var(--opal);
+  --fg-on-dark:    var(--opal);
+
+  --border:        var(--marine-200);
+  --border-strong: var(--marine-700);
+  --border-subtle: var(--marine-100);
+  --hairline:      var(--marine-100);
+
+  --accent:        var(--blueprint);
+  --accent-hover:  var(--blueprint-600);
+  --accent-press:  var(--blueprint-700);
+  --accent-tint:   var(--blueprint-100);
+
+  /* Semantic status — use HEAT for destructive/critical, RAY for pending,
+     BLUEPRINT for informational, SKYLINE for ambient info surfaces */
+  --danger:        var(--heat);
+  --warn:          var(--ray);
+  --info:          var(--blueprint);
+  --ok:            #1E9E6A;   /* Derived — kitchen "fired" / success */
+
+  /* Focus ring */
+  --focus-ring:    var(--blueprint);
+  --focus-ring-offset: var(--bg);
+
+  /* ---------------------------------------------------------------------
+     TYPOGRAPHY — families
+     Manrope = headings only. Inter = body only. Never mix.
+     --------------------------------------------------------------------- */
+  --font-display: "Manrope", "Arial", system-ui, sans-serif;
+  --font-body:    "Inter", "Arial", system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  /* Type scale — operational, tight, no display fireworks */
+  --fs-display:    56px;  /* covers only */
+  --fs-h1:         40px;
+  --fs-h2:         32px;
+  --fs-h3:         24px;
+  --fs-h4:         20px;
+  --fs-h5:         16px;
+  --fs-body:       15px;  /* default */
+  --fs-body-sm:    13px;
+  --fs-caption:    12px;
+  --fs-micro:      11px;
+
+  --lh-tight:      1.1;
+  --lh-snug:       1.25;
+  --lh-normal:     1.5;
+  --lh-relaxed:    1.65;
+
+  --ls-display:   -0.02em;
+  --ls-heading:   -0.01em;
+  --ls-body:       0;
+  --ls-eyebrow:    0.08em;  /* caps labels */
+
+  /* ---------------------------------------------------------------------
+     SPACING — 4px base
+     --------------------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---------------------------------------------------------------------
+     RADII — restrained. No pillows.
+     --------------------------------------------------------------------- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 24px;
+  --radius-pill: 4px;
+
+  /* ---------------------------------------------------------------------
+     BORDERS & ELEVATION
+     No decorative shadows. Elevation is communicated by border + subtle
+     surface shift. A single hairline ring is the default "card" look.
+     --------------------------------------------------------------------- */
+  --border-w: 1px;
+  --border-w-strong: 1.5px;
+
+  --elev-0: none;
+  --elev-1: 0 0 0 1px var(--border);                    /* hairline ring */
+  --elev-2: 0 1px 2px rgba(18, 24, 39, 0.04),
+            0 0 0 1px var(--border);                    /* input / card */
+  --elev-3: 0 6px 20px -8px rgba(18, 24, 39, 0.10),
+            0 0 0 1px var(--border);                    /* popover */
+  --elev-modal: 0 24px 60px -20px rgba(18, 24, 39, 0.25),
+                0 0 0 1px var(--border);
+
+  /* Motion — operational, never bouncy */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit:     cubic-bezier(0.4, 0, 1, 1);
+  --dur-instant:   80ms;
+  --dur-fast:      140ms;
+  --dur-base:      200ms;
+  --dur-slow:      320ms;
+
+  /* Layout */
+  --container-max: 1200px;
+  --content-max:   720px;
+  --gutter:        var(--space-6);
+}
+
+/* =========================================================================
+   SEMANTIC ELEMENT STYLES
+   Use these classes OR apply directly to h1/h2/etc.
+   ========================================================================= */
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h-display, .h1, .h2, .h3, .h4, .h5 {
+  font-family: var(--font-display);
+  color: var(--fg-strong);
+  letter-spacing: var(--ls-heading);
+  line-height: var(--lh-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.h-display {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: var(--ls-display);
+}
+h1, .h1 { font-size: var(--fs-h1); font-weight: 700; }
+h2, .h2 { font-size: var(--fs-h2); font-weight: 700; }
+h3, .h3 { font-size: var(--fs-h3); font-weight: 600; }
+h4, .h4 { font-size: var(--fs-h4); font-weight: 600; }
+h5, .h5 { font-size: var(--fs-h5); font-weight: 600; letter-spacing: 0; }
+
+p, .p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.p-sm     { font-size: var(--fs-body-sm); line-height: var(--lh-normal); }
+.caption  { font-size: var(--fs-caption); color: var(--fg-muted); line-height: var(--lh-normal); }
+.micro    { font-size: var(--fs-micro);   color: var(--fg-subtle); }
+
+/* Eyebrow — small caps label, used above headers. Sparingly. */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-eyebrow);
+  color: var(--fg-muted);
+}
+
+/* Inline */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+a:hover { color: var(--accent-hover); }
+a:active { color: var(--accent-press); }
+
+code, kbd, samp, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* Focus — visible, branded, never removed */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Selection */
+::selection {
+  background: var(--blueprint);
+  color: var(--opal);
+}
+
+/* Hairline divider */
+hr, .divider {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: var(--space-6) 0;
+}
