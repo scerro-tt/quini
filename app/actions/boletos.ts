@@ -116,6 +116,7 @@ export async function processBoletoWithVision(boletoId: string, imageBase64: str
 
     return { data, predictions: result.predictions }
   } catch (err) {
+    const supabase = await createClient()
     await supabase
       .from('boletos')
       .update({

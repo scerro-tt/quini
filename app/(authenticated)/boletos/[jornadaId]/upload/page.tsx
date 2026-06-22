@@ -7,13 +7,44 @@ import { BoletoPreview } from '@/app/components/BoletoPreview'
 import { getJornadaById } from '@/app/actions/jornadas'
 import { Loader2 } from 'lucide-react'
 
+interface Jornada {
+  id: string
+  season_id: string
+  jornada_number: number
+  name: string
+  deadline: string
+  status: string
+  created_at: string
+}
+
+interface Prediction {
+  match_number: number
+  match_description: string
+  prediction: '1' | 'X' | '2' | 'TBD'
+  confidence: number
+}
+
+interface Boleto {
+  id: string
+  jornada_id: string
+  user_id: string
+  image_url: string
+  predictions?: {
+    matches: Prediction[]
+    raw_ocr_text: string
+  }
+  processing_status: string
+  uploaded_at: string
+  processed_at?: string
+}
+
 export default function BoletoUploadPage() {
   const router = useRouter()
   const params = useParams()
   const jornadaId = params.jornadaId as string
 
-  const [jornada, setJornada] = useState<any>(null)
-  const [boleto, setBoleto] = useState<any>(null)
+  const [jornada, setJornada] = useState<Jornada | null>(null)
+  const [boleto, setBoleto] = useState<Boleto | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 

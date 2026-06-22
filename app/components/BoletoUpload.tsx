@@ -15,7 +15,8 @@ export function BoletoUpload({ jornadaId, onSuccess }: BoletoUploadProps) {
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const handleFile = async (file: File) => {
+  const handleFile = async (file: File): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (!file.type.startsWith('image/')) {
       setError('Please upload an image file')
       return
@@ -38,7 +39,7 @@ export function BoletoUpload({ jornadaId, onSuccess }: BoletoUploadProps) {
         // Upload to Supabase Storage
         const supabase = (await import('@/lib/supabase/client')).createClient()
         const filename = `${jornadaId}/${Date.now()}-${file.name}`
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('boletos')
           .upload(filename, file, { upsert: false })
 

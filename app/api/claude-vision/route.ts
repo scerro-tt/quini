@@ -103,6 +103,7 @@ Sé exhaustivo: lee TODOS los números y predicciones del boleto.`,
         throw new Error('No JSON found in response')
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const parsedData = JSON.parse(jsonMatch[0])
       predictions = parsedData.matches || []
       rawText = parsedData.raw_text || textContent.text
@@ -127,7 +128,7 @@ Sé exhaustivo: lee TODOS los números y predicciones del boleto.`,
         processing_time_ms: processingTime,
       },
     })
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Vision API error:', error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Vision processing failed' },

@@ -117,7 +117,7 @@ export function BoletoPreview({ boleto }: BoletoPreviewProps) {
                           : 'bg-blue-100 text-blue-700'
                       }`}
                     >
-                      {pred.prediction === '1' ? 'Local' : pred.prediction === 'X' ? 'Empate' : pred.prediction === '2' ? 'Visitante' : pred.prediction}
+                      {pred.prediction === '1' ? 'Local' : pred.prediction === 'X' ? 'Empate' : pred.prediction === '2' ? 'Visitante' : `"${pred.prediction}"`}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm">

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { signUp } from '@/lib/auth'
-import { Loader2, AlertCircle, Check } from 'lucide-react'
+import { Loader2, AlertCircle } from 'lucide-react'
 
 export function RegisterForm() {
   const [email, setEmail] = useState('')
