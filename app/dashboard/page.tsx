@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
+export const dynamic = 'force-dynamic'
+
 interface Profile {
   id: string
   nickname: string
