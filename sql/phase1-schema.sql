@@ -2,9 +2,38 @@
 -- Run this in Supabase SQL Editor
 
 -- ============================================================================
--- PROFILES EXTENSION (add is_admin to existing profiles table)
+-- PROFILES TABLE (extends auth.users)
 -- ============================================================================
-ALTER TABLE profiles ADD COLUMN is_admin BOOLEAN DEFAULT FALSE;
+CREATE TABLE IF NOT EXISTS profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  nickname TEXT UNIQUE NOT NULL,
+  avatar TEXT DEFAULT 'default',
+  is_admin BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- If profiles already exists, just add is_admin column (this won't fail if it's already there)
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE;
+
+-- Enable RLS on profiles
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view all profiles" ON profiles;
+DROP POLICY IF EXISTS "Users can only update their own profile" ON profiles;
+
+-- Create RLS policies
+CREATE POLICY "Users can view all profiles"
+  ON profiles
+  FOR SELECT
+  TO authenticated
+  USING (true);
+
+CREATE POLICY "Users can only update their own profile"
+  ON profiles
+  FOR UPDATE
+  TO authenticated
+  USING (auth.uid() = id);
 
 -- ============================================================================
 -- SEASONS TABLE
