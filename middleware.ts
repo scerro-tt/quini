@@ -30,8 +30,21 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Redirect to login if accessing protected routes without authentication
-  if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
+  if (!user && (request.nextUrl.pathname.startsWith('/dashboard') || request.nextUrl.pathname.startsWith('/admin'))) {
     return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // Check admin access
+  if (user && request.nextUrl.pathname.startsWith('/admin')) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', user.id)
+      .single()
+
+    if (!profile?.is_admin) {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
   }
 
   // Redirect to dashboard if already logged in and accessing auth pages

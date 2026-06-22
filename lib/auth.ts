@@ -30,6 +30,7 @@ export async function signUp(
       id: data.user.id,
       nickname,
       avatar: 'default',
+      is_admin: false,
       created_at: new Date().toISOString(),
     })
 
