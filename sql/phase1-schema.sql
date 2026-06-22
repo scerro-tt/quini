@@ -36,6 +36,16 @@ CREATE POLICY "Users can only update their own profile"
   USING (auth.uid() = id);
 
 -- ============================================================================
+-- HELPER FUNCTION: Check if user is admin
+-- ============================================================================
+CREATE OR REPLACE FUNCTION is_admin(user_id UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (SELECT 1 FROM profiles WHERE id = user_id AND is_admin = true);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- ============================================================================
 -- SEASONS TABLE
 -- ============================================================================
 CREATE TABLE seasons (
@@ -53,9 +63,9 @@ ALTER TABLE seasons ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can view seasons" ON seasons FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Only admins can create seasons" ON seasons FOR INSERT TO authenticated
-  WITH CHECK (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  WITH CHECK (is_admin(auth.uid()));
 CREATE POLICY "Only admins can update seasons" ON seasons FOR UPDATE TO authenticated
-  USING (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  USING (is_admin(auth.uid()));
 
 -- ============================================================================
 -- JORNADAS TABLE (matchdays)
@@ -75,9 +85,9 @@ ALTER TABLE jornadas ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can view jornadas" ON jornadas FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Only admins can create jornadas" ON jornadas FOR INSERT TO authenticated
-  WITH CHECK (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  WITH CHECK (is_admin(auth.uid()));
 CREATE POLICY "Only admins can update jornadas" ON jornadas FOR UPDATE TO authenticated
-  USING (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  USING (is_admin(auth.uid()));
 
 -- ============================================================================
 -- BOLETOS TABLE (user tickets for each jornada)
@@ -122,9 +132,9 @@ ALTER TABLE results ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can view results" ON results FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Only admins can insert results" ON results FOR INSERT TO authenticated
-  WITH CHECK (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  WITH CHECK (is_admin(auth.uid()));
 CREATE POLICY "Only admins can update results" ON results FOR UPDATE TO authenticated
-  USING (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  USING (is_admin(auth.uid()));
 
 -- ============================================================================
 -- SCORES TABLE (calculated per user per jornada)
@@ -143,7 +153,7 @@ CREATE TABLE scores (
 ALTER TABLE scores ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can view scores" ON scores FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Only system can insert/update scores" ON scores FOR INSERT TO authenticated USING (false);
+CREATE POLICY "Only system can insert scores" ON scores FOR INSERT TO authenticated WITH CHECK (false);
 CREATE POLICY "Only system can update scores" ON scores FOR UPDATE TO authenticated USING (false);
 
 -- ============================================================================
@@ -163,9 +173,9 @@ ALTER TABLE prizes ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Anyone can view prizes" ON prizes FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Only admins can manage prizes" ON prizes FOR INSERT TO authenticated
-  WITH CHECK (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  WITH CHECK (is_admin(auth.uid()));
 CREATE POLICY "Only admins can update prizes" ON prizes FOR UPDATE TO authenticated
-  USING (auth.uid() IN (SELECT id FROM profiles WHERE is_admin = true));
+  USING (is_admin(auth.uid()));
 
 -- ============================================================================
 -- RANKINGS VIEW (materialized on-demand)
